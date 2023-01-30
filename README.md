@@ -6,7 +6,14 @@ A simple python (flask) web application which can be used to parse a basic html 
 
 ```bash
 pip install .
+```
+Then
+```
 FLASK_APP=<path_to_app>/app.py flask run -h <ip> -p <port>
+```
+OR
+```
+python lunch_calendar/app.py
 ```
 Open browser and navigate to a school code for the desired calendar (i.e. http://localhost:5000/sre.ics).  The current and (if available) next months will be served in an ics file.
 

@@ -3,7 +3,6 @@
 import calendar
 import logging
 import os
-import sys
 from datetime import datetime
 from typing import Optional
 
@@ -161,4 +160,4 @@ def write_calendar(calendar_path):
 
 
 if __name__ == "__main__":
-    write_calendar(sys.argv[0])
+    app.run()

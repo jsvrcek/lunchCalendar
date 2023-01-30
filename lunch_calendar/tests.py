@@ -1,12 +1,19 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
+# pylint: disable=too-many-arguments
 
 import unittest
-from unittest.mock import patch, Mock, MagicMock
+from unittest.mock import MagicMock, Mock, patch, call
 
-from lunch_calendar.app import get_calendar, get_calendar_name, get_month, parse_calendar, add_calendar_events, \
-    write_calendar
+from lunch_calendar.app import (
+    add_calendar_events,
+    get_calendar,
+    get_calendar_name,
+    get_month,
+    parse_calendar,
+    write_calendar,
+)
 
 
 class TestStringMethods(unittest.TestCase):
@@ -38,7 +45,6 @@ class TestStringMethods(unittest.TestCase):
         mock_requests.get.assert_called_once_with(example_calendar_url, timeout=20)
 
     def test_parse_calendar(self):
-
         date_text = "3"
         date_element = Mock(text=date_text)
         meal_text = "Meal Title \n Meal Items \n"
@@ -50,13 +56,12 @@ class TestStringMethods(unittest.TestCase):
 
     @patch("lunch_calendar.app.Event")
     def test_add_calendar_events(self, mock_event):
-
         mock_event_instance = Mock(add=Mock())
         mock_event.return_value = mock_event_instance
         mock_calendar = MagicMock()
         date_text = "3"
-        meal_text = ["Meal Title","Meal Items"]
-        meal_lines = [Mock(text=meal_text[0]),Mock(text=meal_text[1])]
+        meal_text = ["Meal Title", "Meal Items"]
+        meal_lines = [Mock(text=meal_text[0]), Mock(text=meal_text[1])]
 
         meal_element = Mock(find_all=Mock(return_value=meal_lines))
         example_meals = {date_text: meal_element}
@@ -70,14 +75,26 @@ class TestStringMethods(unittest.TestCase):
     @patch("lunch_calendar.app.BeautifulSoup")
     @patch("lunch_calendar.app.get_calendar")
     @patch("lunch_calendar.app.Calendar")
-    def test_write_calendar(self, mock_calendar, mock_get_calendar, mock_beautiful_soup, mock_parse_calendar,
-                            mock_add_calendar_events, mock_response):
+    def test_write_calendar(
+            self,
+            mock_calendar,
+            mock_get_calendar,
+            mock_beautiful_soup,
+            mock_parse_calendar,
+            mock_add_calendar_events,
+            mock_response,
+    ):
         example_path = "sre.ics"
-        mock_response_instance = Mock(headers=dict())
+        mock_response_instance = Mock(headers={})
         mock_response.return_value = mock_response_instance
         mock_calendar_instance = MagicMock()
         mock_calendar.return_value = mock_calendar_instance
         self.assertEqual(mock_response_instance, write_calendar(example_path))
+        mock_get_calendar.assert_has_calls(
+            [call('sre', 1, 2023), call().__bool__(), call('sre', 2, 2023), call().__bool__()])
+        mock_beautiful_soup.assert_called()
+        mock_parse_calendar.assert_called()
+        mock_add_calendar_events.assert_called()
 
 
 if __name__ == "__main__":
