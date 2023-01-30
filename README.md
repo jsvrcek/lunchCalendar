@@ -16,6 +16,9 @@ Open browser and navigate to a school code for the desired calendar (i.e. http:/
 Cache timeout should probably be kept to less than 24 hours, just so that updates can happen within a day.  That said, 
 keeping the timeout very high will prevent needless requests from the html calendar, and will ensure calendars are loaded
 instantly.
+
 `CACHE_TIMEOUT` = A timeout in seconds to clear the cached ics lunch (default: 28800). 
+
 `CALENDAR_URL` = The root url to get the calendar (default: http://www.belchertownps.org/sites/default/files/menus)
+
 `LOG_LEVEL` = The log level (default: INFO)
