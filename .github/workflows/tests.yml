@@ -1,0 +1,42 @@
+name: Lunch Calendar
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install .
+    - name: Check Black format
+      run: |
+        black --check lunch_calendar
+    - name: Check isort format
+      run: |
+        isort --check lunch_calendar
+    - name: Check types with mypy
+      run: |
+        mypy lunch_calendar
+    - name: Lint with pylint
+      run: |
+        pylint lunch_calendar
+    - name: Test with coverage and unittest
+      run: |
+        coverage run -m unittest
+        coverage report

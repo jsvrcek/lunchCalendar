@@ -1,0 +1,79 @@
+[project]
+name = "BPSLunchCalendarSyncTool"
+version = "0.0.1"
+authors = [
+    { name = "Joseph Svrcek", email = "joesvrcek@hotmail.com" },
+]
+description = "A small application to create an ICS from an HTML calendar"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    'beautifulsoup4 == 4.11.1',
+    'Flask == 2.2.2',
+    'Flask-Caching == 2.0.2',
+    'icalendar == 5.0.4',
+    'requests == 2.28.1',
+]
+[project.optional-dependencies]
+tests = [
+    'black',
+    'coverage[toml]',
+    'mypy',
+    'pylint',
+    'pytest',
+    'types-pytz',
+    'types-requests',
+    'types-beautifulsoup4'
+]
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+exclude = [
+    'venv',
+    "cache",
+]
+
+[tool.coverage.run]
+branch = true
+omit = ["**\\tests.py", "tests"]
+
+[tool.coverage.paths]
+source = ["lunch_calendar"]
+
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self\\.debug",
+
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+
+    # Don't complain about abstract methods, they aren't run:
+    "@(abc\\.)?abstractmethod"
+]
+
+ignore_errors = true
+show_missing = true
+fail_under = 80
+
+[tool.coverage.html]
+directory = "coverage_html_report"
+
+[tool.pylint]
+max-line-length = 120
