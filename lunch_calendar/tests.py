@@ -4,16 +4,11 @@
 # pylint: disable=too-many-arguments
 
 import unittest
-from unittest.mock import MagicMock, Mock, patch, call
+from unittest.mock import MagicMock, Mock, call, patch
 
-from lunch_calendar.app import (
-    add_calendar_events,
-    get_calendar,
-    get_calendar_name,
-    get_month,
-    parse_calendar,
-    write_calendar,
-)
+from lunch_calendar.app import (add_calendar_events, get_calendar,
+                                get_calendar_name, get_month, parse_calendar,
+                                write_calendar)
 
 
 class TestStringMethods(unittest.TestCase):
@@ -76,13 +71,13 @@ class TestStringMethods(unittest.TestCase):
     @patch("lunch_calendar.app.get_calendar")
     @patch("lunch_calendar.app.Calendar")
     def test_write_calendar(
-            self,
-            mock_calendar,
-            mock_get_calendar,
-            mock_beautiful_soup,
-            mock_parse_calendar,
-            mock_add_calendar_events,
-            mock_response,
+        self,
+        mock_calendar,
+        mock_get_calendar,
+        mock_beautiful_soup,
+        mock_parse_calendar,
+        mock_add_calendar_events,
+        mock_response,
     ):
         example_path = "sre.ics"
         mock_response_instance = Mock(headers={})
@@ -91,7 +86,13 @@ class TestStringMethods(unittest.TestCase):
         mock_calendar.return_value = mock_calendar_instance
         self.assertEqual(mock_response_instance, write_calendar(example_path))
         mock_get_calendar.assert_has_calls(
-            [call('sre', 1, 2023), call().__bool__(), call('sre', 2, 2023), call().__bool__()])
+            [
+                call("sre", 1, 2023),
+                call().__bool__(),
+                call("sre", 2, 2023),
+                call().__bool__(),
+            ]
+        )
         mock_beautiful_soup.assert_called()
         mock_parse_calendar.assert_called()
         mock_add_calendar_events.assert_called()
