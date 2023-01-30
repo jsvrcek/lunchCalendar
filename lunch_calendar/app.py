@@ -127,7 +127,7 @@ def add_calendar_events(
         cal.add_component(event)
 
 
-@app.route("/<file_path>")
+@app.route("/<calendar_path>")
 @cache.cached(timeout=CACHE_TIMEOUT)
 def write_calendar(calendar_path):
     """
