@@ -6,9 +6,14 @@
 import unittest
 from unittest.mock import MagicMock, Mock, call, patch
 
-from lunch_calendar.app import (add_calendar_events, get_calendar,
-                                get_calendar_name, get_month, parse_calendar,
-                                write_calendar)
+from lunch_calendar.app import (
+    add_calendar_events,
+    get_calendar,
+    get_calendar_name,
+    get_month,
+    parse_calendar,
+    write_calendar,
+)
 
 
 class TestStringMethods(unittest.TestCase):
