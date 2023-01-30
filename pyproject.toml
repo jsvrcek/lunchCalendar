@@ -77,3 +77,6 @@ directory = "coverage_html_report"
 
 [tool.pylint]
 max-line-length = 120
+
+[tool.isort]
+profile = "black"
